@@ -234,16 +234,34 @@ function! bufferline#render()
          \ click_enabled ?
             \ '%' . buffer_number . '@BufferlineMainClickHandler@' : ''
 
+      let L_SIGN_PADDING = 3
+
       let padding = repeat(' ', padding_width)
-      let item =
-         \ clickable .
-         \ signPrefix . sign .
-         \ padding .
-         \ iconPrefix . icon .
-         \ namePrefix . name .
-         \ padding .
-         \ ' ' .
-         \ closePrefix . close
+      if padding_width > L_SIGN_PADDING
+        let l_padding = repeat(' ', padding_width - L_SIGN_PADDING)
+        let r_padding = repeat(' ', L_SIGN_PADDING)
+        let item =
+           \ clickable .
+           \ signPrefix .
+           \ l_padding .
+           \ sign .
+           \ r_padding .
+           \ iconPrefix . icon .
+           \ namePrefix . name .
+           \ padding .
+           \ ' ' .
+           \ closePrefix . close
+      else
+        let item =
+           \ clickable .
+           \ signPrefix . sign .
+           \ padding .
+           \ iconPrefix . icon .
+           \ namePrefix . name .
+           \ padding .
+           \ ' ' .
+           \ closePrefix . close
+      endif
 
       let result .= item
    endfor
